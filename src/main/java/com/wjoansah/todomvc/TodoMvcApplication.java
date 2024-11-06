@@ -17,12 +17,14 @@ public class TodoMvcApplication {
     @Bean
     CommandLineRunner commandLineRunner(TodoRepository repository) {
        return args -> {
-         var todos = List.of(
-             new TodoItem("Trash", "take out the trash", false),
-             new TodoItem("Family", "touch grass", false),
-             new TodoItem("Health", "take a walk", true)
-         );
-         repository.saveAll(todos);
-       } ;
+           if(repository.findAll().isEmpty()) {
+               var todos = List.of(
+                       new TodoItem("Trash", "take out the trash", false),
+                       new TodoItem("Family", "touch grass", false),
+                       new TodoItem("Health", "take a walk", true)
+               );
+               repository.saveAll(todos);
+           }
+       };
     }
 }
